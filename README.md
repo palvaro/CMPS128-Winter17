@@ -2,12 +2,12 @@
 ## Distributed Systems
 | key | value | 
 |-----|-------|
-|When: | Tuesdays and Thursdays at <b>2 PM</b>. |
-|Where: | PhysSciences 114 |
+|When: | Monday, Wednesday and Friday at <b>2:40 PM</b>. |
+|Where: | Engineering 2, Room 192 |
 |Who: | [Peter Alvaro](http://people.ucsc.edu/~palvaro/) |
-|Office hours: | Tue/Thu 1-2PM |
-|Lab location: | Baskin Engineering, room 105|
-|Lab hours: | Tue/Thu 12-1:45PM |
+|Office hours: | W/F 1:30-2:30PM |
+|Lab location: | TBD |
+|Lab hours: | TBD |
 |Prerequisites: | CMPS101 or CE150 required. CMPS111 or CMPS105 recommended. |
 |Text: | [Distributed Systems](http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/), Coulouris et al.|
 |Readings: | [Readings](materials/readings.md)|
@@ -21,24 +21,21 @@ Distributed systems are notoriously difficult to program, and even harder to rea
 While distributed systems have been studied for some time, they have only recently become essentially ubiquitous:
 nearly all non-trivial systems are now physically distributed.  It is no longer possible to relegate responsibility for managing the complexity of distributed systems to a group of expert library or infrastructure writers: all programmers must now be distributed programmers. This is both a crisis and an opportunity.
 
-This course will cover both theoretical and practical aspects of distributed systems and distributed programming, including:
- 
- * Ordering and asynchrony
- * Communication models and mechanisms
- * Naming
- * Replication
- * Concurrency control
- * Commit and consensus protocols
- * Partial failure and fault-tolerance
- * Security
- * NoSQL data stores
- * Distributed programming models
- * Virtualization, containers, and other things cloud
+This course will cover both theoretical and practical aspects of distributed systems and distributed programming, diving the subject
+matter into four core *modules*:
+
+ * Time and Asynchrony
+ * Fault Tolerance
+ * Consistency
+ * Parallelism and Scaleup
+
  
 # Readings and Prerequisites
 
 The required text for CMPS128 is [Distributed Systems](http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/) by Coulouris et al.  Despite having perhaps the worst cover art that I have ever seen on any book in my life, this text covers most of the fundamental
-concepts of the course.  For optional reading, Mikito Takada's [Distributed Systems for fun and profit](http://book.mixu.net/distsys/) covers 
+concepts of the course.  Note however that the text is supplemental.  The key material of this course is covered in lecture, and reading the text will not be sufficient to pass the examinations.
+
+For optional reading, Mikito Takada's [Distributed Systems for fun and profit](http://book.mixu.net/distsys/) covers 
 many of the same topics in a sophisticated (albeit high-level) way.
 
 Students are required to have completed either CMPS101 or CE150, and are recommended to have completed CMPS111 or CMPS105.
