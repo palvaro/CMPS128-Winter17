@@ -10,7 +10,7 @@
 |Lab hours: | TBD |
 |Prerequisites: | CMPS101 or CE150 required. CMPS111 or CMPS105 recommended. |
 |Text: | [Distributed Systems](http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/), Coulouris et al.|
-|Readings: | [Readings](materials/readings.md)|
+|modules: | [Modules](modules.md)|
 
 # Description
 
@@ -22,7 +22,7 @@ While distributed systems have been studied for some time, they have only recent
 nearly all non-trivial systems are now physically distributed.  It is no longer possible to relegate responsibility for managing the complexity of distributed systems to a group of expert library or infrastructure writers: all programmers must now be distributed programmers. This is both a crisis and an opportunity.
 
 This course will cover both theoretical and practical aspects of distributed systems and distributed programming, diving the subject
-matter into four core *modules*:
+matter into four core [Modules](modules.md):
 
  * Time and Asynchrony
  * Fault Tolerance
