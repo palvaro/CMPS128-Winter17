@@ -3,7 +3,7 @@
 
 
 
-In each module, we dive deeply into a subject, going from the abstract to the concrete:
+In each module, we dive into the middle of a subject and swim our way out, going from the abstract to the concrete:
  * Abstract models
  * Fundamental challenges
  * Protocols and mechanisms
