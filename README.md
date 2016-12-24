@@ -6,8 +6,6 @@
 |Where: | Engineering 2, Room 192 |
 |Who: | [Peter Alvaro](http://people.ucsc.edu/~palvaro/) |
 |Office hours: | W/F 1:30-2:30PM |
-|Lab location: | TBD |
-|Lab hours: | TBD |
 |Prerequisites: | CMPS101 or CE150 required. CMPS111 or CMPS105 recommended. |
 |Text: | [Distributed Systems](http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/), Coulouris et al.|
 |modules: | [Modules](modules.md)|
