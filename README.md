@@ -9,7 +9,7 @@
 |Prerequisites: | CMPS101 or CE150 required. CMPS111 or CMPS105 recommended. |
 |Text: | [Distributed Systems](http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/), Coulouris et al.|
 |TA: | Michael Shavlovsky (email: mshavlov at ucsc)|
-|Labs: |BE 105, Tuesdays, 12:00 - 2:00 pm, Wednesdays, 8:00am - 10:00am|
+|Labs: |BE 105, Tuesdays 12:00 - 2:00 pm, Wednesdays 8:00am - 10:00am.|
 |TA office hours: |TBD|
 |modules: | [Modules](modules.md)|
 
