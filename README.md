@@ -12,6 +12,7 @@
 |Labs: |Basking Engineering,  Room 105, Tuesdays 12:00 - 2:00 pm, Wednesdays 8:00am - 10:00am.|
 |TA office hours: |Engineering 2, Room 480, Mondays 1:30-2:30pm.|
 |modules: | [Modules](modules.md)|
+|Piazza Singup Link: | [signup link] (piazza.com/ucsc/winter2017/cmps128)|
 
 # Description
 
