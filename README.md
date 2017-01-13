@@ -11,7 +11,8 @@
 |TA: | Michael Shavlovsky (email: mshavlov at ucsc)|
 |Labs: |Basking Engineering,  Room 105, Tuesdays 12:00 - 2:00 pm, Wednesdays 8:00am - 10:00am.|
 |TA office hours: |Engineering 2, Room 480, Mondays 1:30-2:30pm.|
-|modules: | [Modules](modules.md)|
+|Modules: | [Modules](modules.md)|
+|Readings (in flux): | [Readings](readings.md)|
 |Piazza Singup Link: | [signup link] (http://piazza.com/ucsc/winter2017/cmps128)|
 
 # Description
