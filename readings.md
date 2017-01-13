@@ -3,13 +3,12 @@
 || Chapters 1 and 2 | ASAP | 
 |Time | Time, Sections 1-4  (14.1-14.4 in 5th Edition) | 1/18 |
 |Time | Network Models (Section 1.5) | 1/18 | 
-[comment]: # |Naming, Sections 1-4 (13.1 - 13.4 in the 5th Edition) | 4/5 | 
-|Time | |Global states, stable properties and consistent cuts, Sections 5-6 (13.5 - 13.6 in the 5th Edition) | 1/23 | 
+|Time | Global states, stable properties and consistent cuts, Sections 5-6 (13.5 - 13.6 in the 5th Edition) | 1/23 | 
 |Fault tolerance|Failure models (Sections 2.4-2.5 in 5th Edition) | |
 |Fault tolerance | Replication (Sections 18.1-18.3 in 5th Edition ) | | 
 |Fault tolerance | [Dynamo](http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf) | | 
-| [Consistency explained through baseball](http://research.microsoft.com/pubs/206913/ConsistencyAndBaseballCACMAccepted.pdf) | | 
-|Fault tolerance | |Agreement protocols, Part I: Sections 15.1-15.3, 17.3| | 
-|Fault tolerance | |Agreement protocols, Part II: Sections 15.4-15.5| |
+|Consistency  [Consistency explained through baseball](http://research.microsoft.com/pubs/206913/ConsistencyAndBaseballCACMAccepted.pdf) | | 
+|Fault tolerance | Agreement protocols, Part I: Sections 15.1-15.3, 17.3| | 
+|Fault tolerance | Agreement protocols, Part II: Sections 15.4-15.5| |
 |Scale|Google case study: Chapter 21 | |
 |Scale|[MapReduce](https://static.googleusercontent.com/media/research.google.com/en/archive/mapreduce-osdi04.pdf) | |
