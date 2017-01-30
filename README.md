@@ -13,7 +13,6 @@
 |TA office hours: |Engineering 2, Room 480, Mondays 1:30-2:30pm.|
 |Modules: | [Modules](modules.md)|
 |Readings (in flux): | [Readings](readings.md)|
-|Piazza Singup Link: | [signup link] (http://piazza.com/ucsc/winter2017/cmps128)|
 
 # Description
 
