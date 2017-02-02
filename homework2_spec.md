@@ -152,7 +152,8 @@ Pre-condition - localhost:49160 forwards to 8080 of the docker container running
 		 	}
 </pre>
 
-4. PUT, GET, DELETE when the main instance is down 
+4. PUT, GET, DELETE 
+    - case the main instance is down 
       - status code : 404
       - response type : application/json
       - response body:
