@@ -67,7 +67,6 @@ We do not need to set the MAINIP variable.
 The corresponding ENV variables for a forwarding instance will look like:  
 IP=10.0.0.21  
 PORT=8080  
-ISMAIN=False  
 MAINIP=10.0.0.20:8080  
 
 As an illustration, let our service consist of 3 instance A, B, and C. Instance A is the main key-value store. Instances B and C process requests by forwarding to instance A.
