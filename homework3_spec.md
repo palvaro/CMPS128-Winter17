@@ -58,8 +58,8 @@ We are going to use environmental variable "VIEW" to provide information about o
 Below is an example on how to start a key-value store that consists of 2 nodes:
 
 ```
-docker run -p 8081:8080 --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
-docker run -p 8082:8080 --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+docker run -p 8081:8080 --net=mynet --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+docker run -p 8082:8080 --net=mynet --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
 ```
 
 All nodes listen to the 8080 port.
@@ -67,7 +67,8 @@ All nodes listen to the 8080 port.
 Your key-value store needs to be resizable. We can use environmental variables only when we start the nodes. However, once all nodes are running, we cannot use environmental variables to notify existing nodes about the cluster changes. Therefore your key-value store needs to support an API which notifies current nodes about a "view change" that could be a new member or loss of an old one. We assume the following API:
 
 We add a node by sending a PUT request on "/kvs/view_update" with a parameter "type=add" and data field "ip_port" that contains a tuple ip:port of the new node. A successful request looks like this
-PUT localhost:8080/kvs/view_update?type=add  -d  "ip_port=10.0.0.20:8080"
+
+* PUT localhost:8080/kvs/view_update?type=add  -d  "ip_port=10.0.0.20:8080"
 ```
 {
      'msg': 'success'
@@ -76,7 +77,8 @@ PUT localhost:8080/kvs/view_update?type=add  -d  "ip_port=10.0.0.20:8080"
 
 Note that the IP:port pair of a new node is provided in the data field of the PUT request.
 We remove a node by sending a PUT request on "/kvs/view_update" with parameter a "type=remove" and data field "ip_port" that contains a tuple ip:port of the node to be removed. An example request
-PUT localhost:8080/kvs/view_update?type=remove  -d  "ip_port=10.0.0.20:8080"
+
+* PUT localhost:8080/kvs/view_update?type=remove  -d  "ip_port=10.0.0.20:8080"
 ```
 {
      'msg': 'success'
