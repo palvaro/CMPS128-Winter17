@@ -23,8 +23,10 @@ If the reverse index contains information about the whole WWW, then there is no 
 ### Scalable Key-Value Store
 How can we distribute a key-value store across several machines? There are many strategies available for assignment keys to nodes. For example, one can use hash, random, consistent hash, directory-based, round robin partition strategies. Every strategy has its own advantages and disadvantages. You can create you own partition strategy or you can implement an existing one. 
 A partition strategy should satisfy the following 2 properties:
+
 1. Every key belongs to a single node.
 2. Keys are distributed (approximately) uniformly across the nodes.
+
 We call a node an owner of a set of keys if this node is responsible for storing keys from the set. 
 
 In this assignment, you need to develop a key-value store with a partition strategy that satisfies the above 2 conditions. Moreover, the key-value store should be resizable: we can add and remove nodes from the cluster while the key-value store is running. Therefore the partition strategy should be dynamic, that is, after the number of nodes have changed, the key-value store should rebalance keys between nodes.   
