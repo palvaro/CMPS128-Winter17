@@ -1,6 +1,6 @@
 # Homework 3: Scalable Key-Value Store
 
-### Due : Thursday, March 2nd, 22:59pm
+### Due : Thursday, March 2nd, 11:59pm
 
 The goal of the 3rd homework is to develop a distributed key-value store that can store lots of data: the amount of data that cannot fit into one single machine.
 
