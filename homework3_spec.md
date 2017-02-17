@@ -32,7 +32,7 @@ We call a node an owner of a set of keys if this node is responsible for storing
 In this assignment, you need to develop a key-value store with a partition strategy that satisfies the above 2 conditions. Moreover, the key-value store should be resizable: we can add and remove nodes from the cluster while the key-value store is running. Therefore the partition strategy should be dynamic, that is, after the number of nodes have changed, the key-value store should rebalance keys between nodes.   
 To test that keys are distributed evenly, you can insert a large amount of randomly generated keys and then count how many key each node owns. For example, if a key-value store consist of 3 nodes, you can add 3000 key to the store. Each node should contains approximately 1k of keys.
 
-The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip address of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node.
+The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip:port pair of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node.
 
 Below is an example of responses of successful operations
 put(key, val) returns json
@@ -57,14 +57,16 @@ We are going to use environmental variable "VIEW" to provide information about o
 
 Below is an example on how to start a key-value store that consists of 2 nodes:
 
-node A: docker run -p 8081:8080 --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
-node B: docker run -p 8082:8080 --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+```
+docker run -p 8081:8080 --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+docker run -p 8082:8080 --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+```
 
 All nodes listen to the 8080 port.
 
-Your key-value store needs to be resizable. We can use environmental variables only when we start the nodes. However, once all nodes are running, we cannot use environmental variables to notify existing nodes about the cluster changes. Therefore your key-value store needs to support an API which notifies current nodes about a “view change” that could be a new member or loss of an old one. We assume the following API:
+Your key-value store needs to be resizable. We can use environmental variables only when we start the nodes. However, once all nodes are running, we cannot use environmental variables to notify existing nodes about the cluster changes. Therefore your key-value store needs to support an API which notifies current nodes about a "view change" that could be a new member or loss of an old one. We assume the following API:
 
-We add a node by sending a PUT request on “/kvs/view_update” with a parameter ”type=add” and data field “ip_port” that contains a tuple ip:port of the new node. A successful request looks like this
+We add a node by sending a PUT request on "/kvs/view_update" with a parameter "type=add" and data field "ip_port" that contains a tuple ip:port of the new node. A successful request looks like this
 PUT localhost:8080/kvs/view_update?type=add  -d  "ip_port=10.0.0.20:8080"
 ```
 {
@@ -82,7 +84,7 @@ PUT localhost:8080/kvs/view_update?type=remove  -d  "ip_port=10.0.0.20:8080"
 ```
 
 When a node receives a view change, it is responsible for notifying all of the other nodes of the view change and for moving its own keys to where they belong in the new view. 
-Once the view change is successful on all nodes, the client receives the “success” response. We guarantee that we will wait until view changes are complete before sending any more traffic to a given node.
+Once the view change is successful on all nodes, the client receives the "success" response. We guarantee that we will wait until view changes are complete before sending any more traffic to a given node.
 
 ### Functional Guarantees
 We are going to evaluate your key-value store using the following criteria
