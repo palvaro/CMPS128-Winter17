@@ -32,7 +32,8 @@ We call a node an owner of a set of keys if this node is responsible for storing
 In this assignment, you need to develop a key-value store with a partition strategy that satisfies the above 2 conditions. Moreover, the key-value store should be resizable: we can add and remove nodes from the cluster while the key-value store is running. Therefore the partition strategy should be dynamic, that is, after the number of nodes have changed, the key-value store should rebalance keys between nodes.   
 To test that keys are distributed evenly, you can insert a large amount of randomly generated keys and then count how many key each node owns. For example, if a key-value store consist of 3 nodes, you can add 3000 key to the store. Each node should contains approximately 1k of keys.
 
-The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip:port pair of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node.
+The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip:port pair of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node. When a request is issued to the node that owns the key, then the value of the 'owner' field is an empty string.
+
 
 Below is an example of responses of successful operations
 put(key, val) returns json
