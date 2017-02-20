@@ -5,7 +5,7 @@
 The goal of the 3rd homework is to develop a distributed key-value store that can store lots of data: the amount of data that cannot fit into one single machine.
 
 ### Specification Updates
-Monday, Feb. 20: To specify an identity of an instance, we use environmental variable "IPPORT" that is a pair of the ip address and the port separated by a colon.
+**Monday, Feb. 20**: To specify an identity of an instance, we use environmental variable "IPPORT" that is a pair of the ip address and the port separated by a colon.
 
 ### An example 
 As an illustration, imagine that you were asked to build a simple web search engine that returns a set of pages related to a user query.  One approach is to create a dictionary that maps a word into a list of web pages that contain the word.  Sometimes, this dictionary is called a reverse index.  When a user searches issues a query, say "warriors basketball", the search engine returns an intersection of web pages corresponding to the individual keywords "warriors" and "basketball".
@@ -60,7 +60,7 @@ We are going to use environmental variable "VIEW" to provide information about o
 We are going to use environmental variable "IPPORT" to specify the ip address
 and the port of the node we are starting. It might look redundant to provide the
 ip address twice: the first time using the "--ip" flag and the second time
-using the "IPPORT" environmental variable. However, we use the "--ip" flag due to Docker requirements to specify the ip address. We use "IPPORT" variable for our convenience, as establishing the ip address within a running instance can be ambiguous.
+using the "IPPORT" environmental variable. However, we use the "--ip" flag due to Docker requirements to specify an ip address. We use the "IPPORT" variable for our convenience, as establishing the ip address within a running instance can be ambiguous.
 
 Below is an example on how to start a key-value store that consists of 2 nodes:
 
