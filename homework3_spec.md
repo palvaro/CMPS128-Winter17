@@ -4,6 +4,9 @@
 
 The goal of the 3rd homework is to develop a distributed key-value store that can store lots of data: the amount of data that cannot fit into one single machine.
 
+### Specification Updates
+Monday, Feb. 20: To specify an identity of an instance, we use environmental variable "IPPORT" that is a pair of the ip address and the port separated by a colon.
+
 ### An example 
 As an illustration, imagine that you were asked to build a simple web search engine that returns a set of pages related to a user query.  One approach is to create a dictionary that maps a word into a list of web pages that contain the word.  Sometimes, this dictionary is called a reverse index.  When a user searches issues a query, say "warriors basketball", the search engine returns an intersection of web pages corresponding to the individual keywords "warriors" and "basketball".
 If the reverse index contains entries for "warriors" and "basketball" as shown below, then the resulting pages are 'warriors.com', 'nba.com', ....
@@ -32,8 +35,7 @@ We call a node an owner of a set of keys if this node is responsible for storing
 In this assignment, you need to develop a key-value store with a partition strategy that satisfies the above 2 conditions. Moreover, the key-value store should be resizable: we can add and remove nodes from the cluster while the key-value store is running. Therefore the partition strategy should be dynamic, that is, after the number of nodes have changed, the key-value store should rebalance keys between nodes.   
 To test that keys are distributed evenly, you can insert a large amount of randomly generated keys and then count how many key each node owns. For example, if a key-value store consist of 3 nodes, you can add 3000 key to the store. Each node should contains approximately 1k of keys.
 
-The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip:port pair of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node. When a request is issued to the node that owns the key, then the value of the 'owner' field is an empty string.
-
+The key-value store should support the same functions put, get, del as in homework 2 with a difference: a response of every kvs command contains the ip:port pair of the owner node for that key. When a request (put, get or del) was issued to a node that is not supposed to have the key, the node forwards the request to the appropriate (owner) node and then returns the response PLUS the ip:port pair of the owner node.
 
 Below is an example of responses of successful operations
 put(key, val) returns json
@@ -55,12 +57,16 @@ get(key) returns json
 
 ### Creating a Key-Value Store
 We are going to use environmental variable "VIEW" to provide information about other nodes in the cluster. Variable "VIEW" contains ip:port pairs separated by a comma.
+We are going to use environmental variable "IPPORT" to specify the ip address
+and the port of the node we are starting. It might look redundant to provide the
+ip address twice: the first time using the "--ip" flag and the second time
+using the "IPPORT" environmental variable. However, we use the "--ip" flag due to Docker requirements to specify the ip address. We use "IPPORT" variable for our convenience, as establishing the ip address within a running instance can be ambiguous.
 
 Below is an example on how to start a key-value store that consists of 2 nodes:
 
 ```
-docker run -p 8081:8080 --net=mynet --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
-docker run -p 8082:8080 --net=mynet --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" kvs
+docker run -p 8081:8080 --net=mynet --ip=10.0.0.20 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" -e "IPPORT"="10.0.0.20:8080"  kvs
+docker run -p 8082:8080 --net=mynet --ip=10.0.0.21 -e VIEW="10.0.0.20:8080,10.0.0.21:8080" -e "IPPORT"="10.0.0.21:8080"  kvs
 ```
 
 All nodes listen to the 8080 port.
