@@ -74,7 +74,7 @@ We use "update_view" request to add and delete nodes. An addition or a deletion 
     "number_of_partitions":3,
 }
 ```
-* A PUT request on "/kvs/update_view?type=remove" with the payload "ip_port=\<ip_port\>" removes the node. It decrements the number of partitions, if needed. A successful response object thee total number of partitions after the deletion, for example
+* A PUT request on "/kvs/update_view?type=remove" with the payload "ip_port=\<ip_port\>" removes the node. It decrements the number of partitions, if needed. A successful response object contains the total number of partitions after the deletion, for example
 ```
 {
     "msg":"success",
@@ -82,10 +82,10 @@ We use "update_view" request to add and delete nodes. An addition or a deletion 
 }
 ```
 
-### Obtaining partition information
+### Obtaining Partition Information
 The following methods allow a client to obtain information about partitions.
 
-* A GET request on "/kvs/get_partition_id" returns the partition id where the node belongs to. For example, the following curl request "curl -X GET http://localhost:8083/kvs/get_partition_id" returns the id of the node that we can access via "localhost:8083". A successful response looks like
+* A GET request on "/kvs/get_partition_id" returns the partition id where the node belongs to. For example, the following curl request `curl -X GET http://localhost:8083/kvs/get_partition_id` returns the id of the node that we can access via "localhost:8083". A successful response looks like
 ```
 {
     "msg":"success",
