@@ -1,4 +1,4 @@
-# Fault Tolerant and Scalable Key-value
+# Fault Tolerant and Scalable Key-value Store
 
 ### Due : Sunday, March 19th, 11:59pm
 
