@@ -85,7 +85,7 @@ We use "update_view" request to add and delete nodes. An addition or a deletion 
 ### Obtaining Partition Information
 The following methods allow a client to obtain information about partitions.
 
-* A GET request on "/kvs/get_partition_id" returns the partition id where the node belongs to. For example, the following curl request `curl -X GET http://localhost:8083/kvs/get_partition_id` returns the id of the node that we can access via "localhost:8083". A successful response looks like
+* A GET request on "/kvs/get_partition_id" returns the partition id where the node belongs to. For example, the following curl request `curl -X GET http://localhost:8083/kvs/get_partition_id` returns the id of the node that we can access via `localhost:8083`. A successful response looks like
 ```
 {
     "msg":"success",
@@ -102,7 +102,7 @@ The following methods allow a client to obtain information about partitions.
 ```
 
 * A GET request on "/kvs/get_partition_members" with data payload "partition_id=\<partition_id\>" returns a list of nodes in the partition.
-    For example the following curl request "curl -X GET http://localhost:8083/kvs/get_partition_members -d 'partition_id=1' " will return a list of nodes in the partition with id 1.
+    For example the following curl request `curl -X GET http://localhost:8083/kvs/get_partition_members -d 'partition_id=1' ` will return a list of nodes in the partition with id 1.
 ```
 {
     "msg":"success",
