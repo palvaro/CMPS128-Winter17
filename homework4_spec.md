@@ -51,7 +51,7 @@ To consider another example, let 2 clients write concurrently to 2 different nod
 }
 ```
 
-* A PUT request to "/kvs/<key>" with the data fields "val=<value>" and "causal_payload=<causal_payload>" creates a record in the key value store. The "causal_payload" data field is the causal payload observed by the client’s previous reads (why we need it? See the example above). If the client did not do any reads, then the  causal payload is an empty string. The response object has the following fields: "msg", "partition_id", "causal_payload", "timestamp". An example of a successful response looks like
+* A PUT request to "/kvs/\<key\>" with the data fields "val=\<value\>" and "causal_payload=\<causal_payload\>" creates a record in the key value store. The "causal_payload" data field is the causal payload observed by the client’s previous reads (why we need it? See the example above). If the client did not do any reads, then the  causal payload is an empty string. The response object has the following fields: "msg", "partition_id", "causal_payload", "timestamp". An example of a successful response looks like
 ```
 {
     "msg":"success",
@@ -66,7 +66,7 @@ To consider another example, let 2 clients write concurrently to 2 different nod
 ### Adding and Deleting Nodes
 We use "update_view" request to add and delete nodes. An addition or a deletion of a node might change the number of partitions. For example, let we started a key value-store with 6 nodes and partition size K=3. It follows that the key-value store has 2 partitions with 3 replicas each. If we add a new node, then due to the partition size constraint, the number of partitions becomes 3.
 
-* A PUT request on "/kvs/update_view?type=add" with the data payload "ip_port=<ip_port>" adds the node to the key-value store. It increments the number of partitions, if needed. A successful response returns the partition id of the new node, and the total number of partitions. It should look like:
+* A PUT request on "/kvs/update_view?type=add" with the data payload "ip_port=\<ip_port\>" adds the node to the key-value store. It increments the number of partitions, if needed. A successful response returns the partition id of the new node, and the total number of partitions. It should look like:
 ```
 {
     "msg":"success",
@@ -74,7 +74,7 @@ We use "update_view" request to add and delete nodes. An addition or a deletion 
     "number_of_partitions":3,
 }
 ```
-* A PUT request on "/kvs/update_view?type=remove" with the payload "ip_port=<ip_port>" removes the node. It decrements the number of partitions, if needed. A successful response object thee total number of partitions after the deletion, for example
+* A PUT request on "/kvs/update_view?type=remove" with the payload "ip_port=\<ip_port\>" removes the node. It decrements the number of partitions, if needed. A successful response object thee total number of partitions after the deletion, for example
 ```
 {
     "msg":"success",
@@ -101,7 +101,7 @@ The following methods allow a client to obtain information about partitions.
 }
 ```
 
-* A GET request on "/kvs/get_partition_members" with data payload "partition_id=<partition_id>" returns a list of nodes in the partition.
+* A GET request on "/kvs/get_partition_members" with data payload "partition_id=\<partition_id\>" returns a list of nodes in the partition.
     For example the following curl request "curl -X GET http://localhost:8083/kvs/get_partition_members -d 'partition_id=1' " will return a list of nodes in the partition with id 1.
 ```
 {
