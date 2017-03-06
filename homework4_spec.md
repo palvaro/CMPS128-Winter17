@@ -64,7 +64,7 @@ To consider another example, let 2 clients write concurrently to 2 different nod
 * DELETE. You do not need to implement deletion of keys in this assignment.
 
 ### Adding and Deleting Nodes
-We use "update_view" request to add and delete nodes. An addition or a deletion of a node might change the number of partitions. For example, let we started a key value-store with 6 nodes and partition size K=3. It follows that the key-value store has 2 partitions with 3 replicas each. If we add a new node, then due to the partition size constraint, the number of partitions becomes 3. The new partition will consist of one node only . If we add another node, then the partition contains 2 nodes.
+We use "update_view" request to add and delete nodes. An addition or a deletion of a node might change the number of partitions. For example, let we started a key value-store with 6 nodes and partition size K=3. It follows that the key-value store has 2 partitions with 3 replicas each. If we add a new node, then due to the partition size constraint, the number of partitions becomes 3. The new partition will consist of one node only . Further, if we add another node, then the number of partitions does not change, and the new node lands into the partition with 1 replica. This partition will consist of 2 replicas afterwards.
 
 * A PUT request on "/kvs/update_view?type=add" with the data payload "ip_port=\<ip_port\>" adds the node to the key-value store. It increments the number of partitions, if needed. A successful response returns the partition id of the new node, and the total number of partitions. It should look like:
 ```
