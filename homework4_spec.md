@@ -21,14 +21,15 @@ To start a key value store we use the following environmental variables.
 
 * "K" is the number of replicas per partition. Each partition owns a subset of keys.
 * "VIEW" is the list of ip:ports pairs of nodes.
+* "IPPORT" is the ip address and port of the node.
 
 An example of starting a key-value store with 4 nodes and partition size 2:
 
 ```
-docker run -p 8081:8080 --ip=10.0.0.21 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" mycontainer
-docker run -p 8082:8080 --ip=10.0.0.22 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" mycontainer
-docker run -p 8083:8080 --ip=10.0.0.23 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" mycontainer
-docker run -p 8084:8080 --ip=10.0.0.24 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" mycontainer
+docker run -p 8081:8080 --ip=10.0.0.21 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" -e IPPORT="10.0.0.21:8080" mycontainer
+docker run -p 8082:8080 --ip=10.0.0.22 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" -e IPPORT="10.0.0.22:8080" mycontainer
+docker run -p 8083:8080 --ip=10.0.0.23 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" -e IPPORT="10.0.0.23:8080" mycontainer
+docker run -p 8084:8080 --ip=10.0.0.24 --net=mynet -e K=2 -e VIEW="10.0.0.21:8080,10.0.0.22:8080,10.0.0.23:8080,10.0.0.24:8080" -e IPPORT="10.0.0.24:8080" mycontainer
 ```
 
 ## API
