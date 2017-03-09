@@ -41,7 +41,7 @@ To illustrate, let a client A writes a key, and a client B reads that key and th
 To consider another example, let 2 clients write concurrently to 2 different nodes respectively. And let T_1 and T_2 be the corresponding write timestamps measured according to the nodes' wall clocks. If T_1 > T_2 then the first write wins. If T_1 < T_2 then the second write wins. However, how can we resolve the writing conflict if T_1 == T_2? Can we use the identity of the nodes?
 
 
-* A GET request to "/kvs/\<key\>" retrieves the value that corresponds to the key; a response object has the following fields: "msg", "value", "partition_id", "causal_payload", "timestamp". A response to a successful request looks like this
+* A GET request to "/kvs/\<key\>" with the data field "causal_payload=\<causal_payload\>" retrieves the value that corresponds to the key. The "causal_payload" data field is the causal payload observed by the client’s most recent read or write operation. A response object has the following fields: "msg", "value", "partition_id", "causal_payload", "timestamp". A response to a successful request looks like this
 ```
 {
     "msg":"success",
@@ -52,7 +52,7 @@ To consider another example, let 2 clients write concurrently to 2 different nod
 }
 ```
 
-* A PUT request to "/kvs/\<key\>" with the data fields "val=\<value\>" and "causal_payload=\<causal_payload\>" creates a record in the key value store. The "causal_payload" data field is the causal payload observed by the client’s previous reads (why we need it? See the example above). If the client did not do any reads, then the  causal payload is an empty string. The response object has the following fields: "msg", "partition_id", "causal_payload", "timestamp". An example of a successful response looks like
+* A PUT request to "/kvs/\<key\>" with the data fields "val=\<value\>" and "causal_payload=\<causal_payload\>" creates a record in the key value store. The "causal_payload" data field is the causal payload observed by the client’s most recent read or write operation (why we need it? See the example above). If the client did not do any reads, then the  causal payload is an empty string. The response object has the following fields: "msg", "partition_id", "causal_payload", "timestamp". An example of a successful response looks like
 ```
 {
     "msg":"success",
