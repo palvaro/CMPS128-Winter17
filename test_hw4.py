@@ -63,7 +63,7 @@ def send_put_request(hostname, node, key, value, causal_payload=''):
     try:
         if PRINT_HTTP_REQUESTS:
             print "PUT request:" + put_str + ' data field:' + str(data)
-        r = req.put(put_str, data=data}
+        r = req.put(put_str, data=data)
         if PRINT_HTTP_RESPONSES:
             print "Response:", r.text, r.status_code
         d = r.json()
@@ -180,11 +180,15 @@ def delete_node_from_kvs(hostname, cur_node, node_to_delete):
     return d
 
 
-if __name__ == "__name__":
-    container_name = 'hw4'
+if __name__ == "__main__":
+    container_name = 'hw3'
+    hostname = 'localhost'
     network = 'mynet'
+    sudo = 'sudo'
+
     try: # Test 1
-        test_description = """ 
+        test_description = """ Test1:
+
         Node additions/deletions. A kvs consists of 2 partitions with 2 replicas each. 
         I add 3 new nodes. The number of partitions should become 4. Then I delete 2 nodes. 
         The number of partitions should become 3. """
@@ -194,41 +198,47 @@ if __name__ == "__name__":
         nodes = start_kvs(4, container_name, K=2, net=network, sudo=sudo)
 
         print "Adding 3 nodes"
-        n1 = start_new_node(container_name, K=2, net='net', sudo='sudo')
-        n2 = start_new_node(container_name, K=2, net='net', sudo='sudo')
-        n3 = start_new_node(container_name, K=2, net='net', sudo='sudo')
+        n1 = start_new_node(container_name, K=2, net=network, sudo='sudo')
+        n2 = start_new_node(container_name, K=2, net=network, sudo='sudo')
+        n3 = start_new_node(container_name, K=2, net=network, sudo='sudo')
 
         resp_dict = add_node_to_kvs(hostname, nodes[0], n1)
-        num_partitions = resp_dict.get('number_of_partitions')
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 3"
         resp_dict = add_node_to_kvs(hostname, nodes[2], n2)
-        num_partitions = resp_dict.get('number_of_partitions')
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 3"
         resp_dict = add_node_to_kvs(hostname, n1, n3)
-        num_partitions = resp_dict.get('number_of_partitions')
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 4:
             print "ERROR: number of partitions should be 4, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 4"
         print "Deleting nodes ..."
         resp_dict = delete_node_from_kvs(hostname, n3, n[0])
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 3"
         resp_dict = delete_node_from_kvs(hostname, n3, n[2])
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 3"
         resp_dict = delete_node_from_kvs(hostname, n3, n2)
+        number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 2:
             print "ERROR: number of partitions should be 2, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 2"
+    except Exception as e:
+        print "Exception in test 1"
+        print e
