@@ -138,7 +138,8 @@ def stop_node(node, sudo='sudo'):
     os.system(cmd_str)
 
 def add_node_to_kvs(hostname, cur_node, new_node):
-    put_str = "http://" + hostname + ":" + cur_node.access_port + "/kvs/view_update?type=add"
+    d = None
+    put_str = "http://" + hostname + ":" + cur_node.access_port + "/kvs/update_view?type=add"
     data = {'ip_port':new_node.ip + ":8080"}
     try:
         if PRINT_HTTP_REQUESTS:
@@ -159,9 +160,9 @@ def add_node_to_kvs(hostname, cur_node, new_node):
 
 
 def delete_node_from_kvs(hostname, cur_node, node_to_delete):
-    put_str = "http://" + hostname + ":" + cur_node.access_port + "/kvs/view_update?type=remove"
-    data = {'ip_port':node_to_delete.ip + ":8080"}
     d = None
+    put_str = "http://" + hostname + ":" + cur_node.access_port + "/kvs/update_view?type=remove"
+    data = {'ip_port':node_to_delete.ip + ":8080"}
     try:
         if PRINT_HTTP_REQUESTS:
             print "PUT request: " + put_str + " data field " + str(data)
@@ -221,13 +222,13 @@ if __name__ == "__main__":
         else:
             print "OK, number of partitions is 4"
         print "Deleting nodes ..."
-        resp_dict = delete_node_from_kvs(hostname, n3, n[0])
+        resp_dict = delete_node_from_kvs(hostname, n3, nodes[0])
         number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 3"
-        resp_dict = delete_node_from_kvs(hostname, n3, n[2])
+        resp_dict = delete_node_from_kvs(hostname, n3, nodes[2])
         number_of_partitions = resp_dict.get('number_of_partitions')
         if number_of_partitions != 3:
             print "ERROR: number of partitions should be 3, but it is " + str(number_of_partitions)
