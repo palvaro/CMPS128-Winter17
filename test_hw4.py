@@ -181,7 +181,7 @@ def delete_node_from_kvs(hostname, cur_node, node_to_delete):
 
 
 if __name__ == "__main__":
-    container_name = 'hw3'
+    container_name = 'hw4'
     hostname = 'localhost'
     network = 'mynet'
     sudo = 'sudo'
