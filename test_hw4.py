@@ -125,7 +125,7 @@ def start_new_node(container_name, K=2, net='net', sudo='sudo'):
     cmd_str = sudo + ' docker run -d -p ' + port + ":8080 --net=" + net + " -e K=" + str(K) + " --ip=" + ip + " -e IPPORT=\"" + ip + ":8080" + "\" " + container_name
     print cmd_str
     node_id = subprocess.check_output(cmd_str, shell=True).rstrip('\n')
-    time.sleep(5)
+    time.sleep(10)
     return Node(port, ip, node_id)
 
 def stop_all_nodes(sudo):                                           
@@ -189,7 +189,6 @@ if __name__ == "__main__":
 
     try: # Test 1
         test_description = """ Test1:
-
         Node additions/deletions. A kvs consists of 2 partitions with 2 replicas each. 
         I add 3 new nodes. The number of partitions should become 4. Then I delete 2 nodes. 
         The number of partitions should become 3. """
@@ -199,9 +198,9 @@ if __name__ == "__main__":
         nodes = start_kvs(4, container_name, K=2, net=network, sudo=sudo)
 
         print "Adding 3 nodes"
-        n1 = start_new_node(container_name, K=2, net=network, sudo='sudo')
-        n2 = start_new_node(container_name, K=2, net=network, sudo='sudo')
-        n3 = start_new_node(container_name, K=2, net=network, sudo='sudo')
+        n1 = start_new_node(container_name, K=2, net=network, sudo=sudo)
+        n2 = start_new_node(container_name, K=2, net=network, sudo=sudo)
+        n3 = start_new_node(container_name, K=2, net=network, sudo=sudo)
 
         resp_dict = add_node_to_kvs(hostname, nodes[0], n1)
         number_of_partitions = resp_dict.get('number_of_partitions')
@@ -240,6 +239,55 @@ if __name__ == "__main__":
             print "ERROR: number of partitions should be 2, but it is " + str(number_of_partitions)
         else:
             print "OK, number of partitions is 2"
+        print "Stopping the kvs"
+        stop_all_nodes(sudo)
     except Exception as e:
         print "Exception in test 1"
+        print e
+    try: # Test 2
+        test_description = """ Test 2:
+        A kvs consists of 2 partitions with 2 replicas each. I send 60 randomly generated keys to the kvs.
+        I add 2 nodes to the kvs. No keys should be dropped.
+        Then, I kill a node and send a view_change request to remove the faulty instance.
+        Again, no keys should be dropped.
+        """
+        nodes = start_kvs(4, container_name, K=2, net=network, sudo=sudo)
+        keys = generate_random_keys(60)
+        add_keys(hostname, nodes, keys, 1)
+        print "Adding 2 nodes"
+        n1 = start_new_node(container_name, K=2, net=network, sudo=sudo)
+        n2 = start_new_node(container_name, K=2, net=network, sudo=sudo)
+
+        resp_dict1 = add_node_to_kvs(hostname, nodes[0], n1)
+        resp_dict2 = add_node_to_kvs(hostname, nodes[2], n2)
+
+        if (resp_dict1 is not None and resp_dict2 is not None and 
+            resp_dict1['msg'] == 'success' and resp_dict2['msg'] == 'success'):
+            raise Exception("Problems with adding 2 new nodes")
+        print "Nodes were successfully added. Verifying that no keys were dropped."
+
+        distr = get_keys_distribution(hostname, nodes, keys)
+        num_keys = sum([val for val in dist.itervalues()])
+        if num_keys != len(keys):
+            raise Exception("Some keys are missing after adding new nodes")
+        else:
+            print "OK, no keys were dropped after adding new nodes"
+        print "Stopping a node and sleeping for 5 seconds."
+        stop_node(nodes[0], sudo=sudo)
+        time.sleep(5)
+        print "Sending a request to remove faulty node from the key-value store"
+        resp_dict = delete_node_from_kvs(hostname, n1, nodes[0])
+        if not (resp_dict is not None and resp_dict['msg'] == 'success'):
+            raise Exception("Problems with deleting a node ")
+        print "A node was successfully deleted. Verifying that no keys were dropped."
+        nodes[0] = n1
+        nodes.append(n2)
+        distr = get_keys_distribution(hostname, nodes, keys)
+        num_keys = sum([val for val in dist.itervalues()])
+        if num_keys != len(keys):
+            raise Exception("Some keys are missing after deleting a node")
+        else:
+            print "OK, no keys were dropped after deleting a node"
+    except Exception as e:
+        print "Exception in test 2"
         print e
