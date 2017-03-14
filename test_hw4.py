@@ -92,7 +92,8 @@ def get_keys_distribution(hostname, nodes, keys):
     d = {}
     for key in keys:
         resp_dict = send_get_request(hostname, nodes[random.randint(0, len(nodes) - 1)], key)
-        if not d.has_key(resp_dict['partition_id']):
+        partition_id = resp_dict['partition_id']
+        if not d.has_key(partition_id):
             d[partition_id] = 0
         d[partition_id] += 1
     return d
@@ -182,7 +183,7 @@ def delete_node_from_kvs(hostname, cur_node, node_to_delete):
 
 
 if __name__ == "__main__":
-    container_name = 'hw4'
+    container_name = 'jpitz_hw4'
     hostname = 'localhost'
     network = 'mynet'
     sudo = 'sudo'
@@ -251,6 +252,7 @@ if __name__ == "__main__":
         Then, I kill a node and send a view_change request to remove the faulty instance.
         Again, no keys should be dropped.
         """
+        print test_description
         nodes = start_kvs(4, container_name, K=2, net=network, sudo=sudo)
         keys = generate_random_keys(60)
         add_keys(hostname, nodes, keys, 1)
@@ -261,21 +263,21 @@ if __name__ == "__main__":
         resp_dict1 = add_node_to_kvs(hostname, nodes[0], n1)
         resp_dict2 = add_node_to_kvs(hostname, nodes[2], n2)
 
-        if (resp_dict1 is not None and resp_dict2 is not None and 
+        if not (resp_dict1 is not None and resp_dict2 is not None and 
             resp_dict1['msg'] == 'success' and resp_dict2['msg'] == 'success'):
             raise Exception("Problems with adding 2 new nodes")
         print "Nodes were successfully added. Verifying that no keys were dropped."
 
         distr = get_keys_distribution(hostname, nodes, keys)
-        num_keys = sum([val for val in dist.itervalues()])
+        num_keys = sum([val for val in distr.itervalues()])
         if num_keys != len(keys):
-            raise Exception("Some keys are missing after adding new nodes")
+            raise Exception("Some keys are missing after adding new nodes.")
         else:
-            print "OK, no keys were dropped after adding new nodes"
+            print "OK, no keys were dropped after adding new nodes."
         print "Stopping a node and sleeping for 5 seconds."
         stop_node(nodes[0], sudo=sudo)
         time.sleep(5)
-        print "Sending a request to remove faulty node from the key-value store"
+        print "Sending a request to remove faulty node from the key-value store."
         resp_dict = delete_node_from_kvs(hostname, n1, nodes[0])
         if not (resp_dict is not None and resp_dict['msg'] == 'success'):
             raise Exception("Problems with deleting a node ")
@@ -283,11 +285,11 @@ if __name__ == "__main__":
         nodes[0] = n1
         nodes.append(n2)
         distr = get_keys_distribution(hostname, nodes, keys)
-        num_keys = sum([val for val in dist.itervalues()])
+        num_keys = sum([val for val in distr.itervalues()])
         if num_keys != len(keys):
-            raise Exception("Some keys are missing after deleting a node")
+            raise Exception("Some keys are missing after deleting a node.")
         else:
-            print "OK, no keys were dropped after deleting a node"
+            print "OK, no keys were dropped after deleting a node."
     except Exception as e:
         print "Exception in test 2"
         print e
