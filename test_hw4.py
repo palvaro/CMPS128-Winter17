@@ -183,11 +183,10 @@ def delete_node_from_kvs(hostname, cur_node, node_to_delete):
 
 
 if __name__ == "__main__":
-    container_name = 'jpitz_hw4'
+    container_name = 'hw4'
     hostname = 'localhost'
     network = 'mynet'
     sudo = 'sudo'
-
     try: # Test 1
         test_description = """ Test1:
         Node additions/deletions. A kvs consists of 2 partitions with 2 replicas each. 
@@ -262,6 +261,7 @@ if __name__ == "__main__":
 
         resp_dict1 = add_node_to_kvs(hostname, nodes[0], n1)
         resp_dict2 = add_node_to_kvs(hostname, nodes[2], n2)
+        time.sleep(5)
 
         if not (resp_dict1 is not None and resp_dict2 is not None and 
             resp_dict1['msg'] == 'success' and resp_dict2['msg'] == 'success'):
@@ -279,6 +279,7 @@ if __name__ == "__main__":
         time.sleep(5)
         print "Sending a request to remove faulty node from the key-value store."
         resp_dict = delete_node_from_kvs(hostname, n1, nodes[0])
+        time.sleep(5)
         if not (resp_dict is not None and resp_dict['msg'] == 'success'):
             raise Exception("Problems with deleting a node ")
         print "A node was successfully deleted. Verifying that no keys were dropped."
