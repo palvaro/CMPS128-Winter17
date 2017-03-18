@@ -352,10 +352,10 @@ if __name__ == "__main__":
             else:
                 print "OK, the number of partitions is 2"
             print "Stopping the kvs"
-            stop_all_nodes(sudo)
         except Exception as e:
             print "Exception in test 1"
             print e
+        stop_all_nodes(sudo)
     if 2 in tests_to_run:
         try: # Test 2
             test_description = """ Test 2:
@@ -404,10 +404,10 @@ if __name__ == "__main__":
                 raise Exception("Some keys are missing after deleting a node.")
             else:
                 print "OK, no keys were dropped after deleting a node."
-            stop_all_nodes(sudo)
         except Exception as e:
             print "Exception in test 2"
             print e
+        stop_all_nodes(sudo)
     if 3 in tests_to_run:
         try: # Test 3
             test_description = """ Test 3:
@@ -457,10 +457,10 @@ if __name__ == "__main__":
             if r.status_code in [200, 201, '200', '201']:
                 raise Exception("ERROR: A KEY %s SHOULD NOT BE AVAILABLE AS ITS PARTITION IS DOWN!!!" % keys[0])
             print "OK, functionality for obtaining information about partitions looks good!"
-            stop_all_nodes(sudo)
         except Exception as e:
             print "Exception in test 3"
             print e
+        stop_all_nodes(sudo)
     if 4 in tests_to_run:
         try: # Test 4
             test_description = """ Test 4:
@@ -492,10 +492,10 @@ if __name__ == "__main__":
                 print "OK, the key-value store works after spamming"
             else:
                 raise Exception("ERROR: the key-value store did not process PUT/GET requests properly after spamming")
-            stop_all_nodes(sudo)
         except Exception as e:
             print "Exception in test 4"
             print e
+        stop_all_nodes(sudo)
     if 5 in tests_to_run:
         try: # Test 5
             test_description = """ Test 5:
@@ -520,6 +520,7 @@ if __name__ == "__main__":
         except Exception as e:
             print "Exception in test 5"
             print e
+        stop_all_nodes(sudo)
     if 6 in tests_to_run:
         try: # Test 6
             num_keys = 3
@@ -571,4 +572,4 @@ if __name__ == "__main__":
         except Exception as e:
             print "Exception in test 6"
             print e
-    stop_all_nodes(sudo)
+        stop_all_nodes(sudo)
