@@ -281,6 +281,7 @@ def find_node(nodes, ip_port):
 def disconnect_node(node, network):
     cmd_str = sudo + " docker network disconnect " + network + " " + node.id
     print cmd_str
+    time.sleep(0.5)
     os.system(cmd_str)
     time.sleep(0.5)
 
@@ -289,6 +290,7 @@ def connect_node(node, network):
     print cmd_str
    # r = subprocess.check_output(cmd_str.split())
    # print r
+    time.sleep(0.5)
     os.system(cmd_str)
     time.sleep(0.5)
 
