@@ -278,14 +278,14 @@ def find_node(nodes, ip_port):
             return n
     return None
 
-def disconnect_node(node, network):
+def disconnect_node(node, network, sudo):
     cmd_str = sudo + " docker network disconnect " + network + " " + node.id
     print cmd_str
     time.sleep(0.5)
     os.system(cmd_str)
     time.sleep(0.5)
 
-def connect_node(node, network):
+def connect_node(node, network, sudo):
     cmd_str = sudo + " docker network connect " + network + " --ip=" + node.ip + ' ' + node.id
     print cmd_str
    # r = subprocess.check_output(cmd_str.split())
@@ -511,9 +511,9 @@ if __name__ == "__main__":
             d = send_get_request(hostname, node, 'foo', causal_payload=d['causal_payload'])
             if d['value'] != 'zoo':
                 raise Exception("ERROR: the kvs did not store value zoo for key zoo")
-            disconnect_node(node, network)
+            disconnect_node(node, network, sudo)
             time.sleep(1)
-            connect_node(node, network)
+            connect_node(node, network, sudo)
             time.sleep(TB)
             d = send_get_request(hostname, node, 'foo', causal_payload=d['causal_payload'])
             if not d.has_key('value')  or d['value'] != 'zoo':
@@ -543,15 +543,15 @@ if __name__ == "__main__":
             part_nodes = [find_node(nodes, ip_port) for ip_port in members]
             print "key %s belongs to partition %s with nodes %s and %s" % (keys[0], partition_id, part_nodes[0], part_nodes[1])
             print "Disconnecting both nodes to verify that the key is not available"
-            disconnect_node(part_nodes[0], network)
-            disconnect_node(part_nodes[1], network)
+            disconnect_node(part_nodes[0], network, sudo)
+            disconnect_node(part_nodes[1], network, sudo)
             other_nodes = [n for n in nodes if n not in part_nodes]
             r = send_simple_get_request(hostname, other_nodes[0], keys[0], causal_payload='')
             if r.status_code in [200, 201, '200', '201']:
                 raise Exception("ERROR: A KEY %s SHOULD NOT BE AVAILABLE AS ITS PARTITION IS DOWN!!!" % keys[0])
             print "Good, the key is not available"
             print "Connecting one node back and verifying that the key is accessible"
-            connect_node(part_nodes[1], network)
+            connect_node(part_nodes[1], network, sudo)
             time.sleep(TB)
             r = send_simple_get_request(hostname, other_nodes[0], keys[0], causal_payload='')
             d = r.json()
@@ -561,9 +561,9 @@ if __name__ == "__main__":
             print "Good, the key is available"
             print "Update the key"
             d = send_put_request(hostname, other_nodes[0],  keys[0], 17, causal_payload=d['causal_payload'])
-            connect_node(part_nodes[0], network)
+            connect_node(part_nodes[0], network, sudo)
             time.sleep(TB)
-            disconnect_node(part_nodes[1], network)
+            disconnect_node(part_nodes[1], network, sudo)
             time.sleep(1)
             d = send_get_request(hostname, other_nodes[1], keys[0], causal_payload=d['causal_payload'])
             if int(d['value']) != 17:
