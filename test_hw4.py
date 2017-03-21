@@ -299,7 +299,7 @@ if __name__ == "__main__":
     hostname = 'localhost'
     network = 'mynet'
     sudo = 'sudo'
-    tests_to_run = [1, 2, 3, 4, 5, 6]
+    tests_to_run = [1, 2, 3, 4, 5, 6, 7, 8] #  
     if 1 in tests_to_run:
         try: # Test 1
             test_description = """ Test1:
@@ -573,5 +573,67 @@ if __name__ == "__main__":
 
         except Exception as e:
             print "Exception in test 6"
+            print e
+        stop_all_nodes(sudo)
+    if 7 in tests_to_run:
+        try: # Test 7
+            num_keys = 3
+            test_description = """ Test 7:
+            A kvs consists of 2 partitions with 3 replicas each. I send %s randomly generated key(s) to the kvs.
+            I read a key from a node. The I update the key on another node from the same partition, 
+            providing the causal payload from the first read. Then I write a new value to the key on another node. 
+            I read from the 3rd node in the paritition and verify that the value is fresh.
+            """ % (num_keys)
+            print test_description
+            nodes = start_kvs(6, container_name, K=3, net=network, sudo=sudo)
+            keys = generate_random_keys(num_keys)
+            add_keys(hostname, nodes, keys, -1)
+            #d = send_put_request(hostname, nodes[0], keys[0], -1)
+            partition_id = get_partition_id_for_key(nodes[0], keys[0])
+            members = get_partition_members(nodes[0], partition_id)
+            part_nodes = [find_node(nodes, ip_port) for ip_port in members]
+            print "key %s belongs to partition %s with nodes %s and %s" % (keys[0], partition_id, part_nodes[0], part_nodes[1])
+            r = send_simple_get_request(hostname, part_nodes[0], keys[0], causal_payload='')
+            d = r.json()
+            d = send_put_request(hostname, part_nodes[1],  keys[0], 15, causal_payload=d['causal_payload'])
+            r = send_simple_get_request(hostname, part_nodes[2],  keys[0], causal_payload=d['causal_payload'])
+            d = r.json()
+            if int(d['value']) != 15:
+                raise Exception("ERROR: THE VALUE IS STALE !")
+            print "OK, the value is up to date!!!"
+        except Exception as e:
+            print "Exception in test 7"
+            print e
+        stop_all_nodes(sudo)
+    if 8 in tests_to_run:
+        try: # Test 8
+            num_keys = 100
+            test_description = """ Test 7:
+            A kvs consists of 2 partitions with 2 replicas each. 
+            I add %s randomly generate keys to the kvs. I remove 1 partition (2 nodes) and 
+            check whether any keys were dropped. (This test is different from other ones as they did not
+            test whether keys were droppend after number of partitions decremented.)
+            """ % (num_keys)
+            print test_description
+            nodes = start_kvs(4, container_name, K=2, net=network, sudo=sudo)
+            keys = generate_random_keys(num_keys)
+            add_keys(hostname, nodes, keys, -1)
+            #d = send_put_request(hostname, nodes[0], keys[0], -1)
+            partition_id = get_partition_id_for_key(nodes[0], keys[0])
+            members = get_partition_members(nodes[0], partition_id)
+            part_nodes = [find_node(nodes, ip_port) for ip_port in members]
+            other_nodes = [n for n in nodes if n not in part_nodes]
+            resp_dict = delete_node_from_kvs(hostname, other_nodes[0], part_nodes[0])
+            time.sleep(10)
+            resp_dict = delete_node_from_kvs(hostname, other_nodes[0], part_nodes[1])
+            time.sleep(10)
+            distr = get_keys_distribution(hostname, other_nodes, keys)
+            num_keys = sum([val for val in distr.itervalues()])
+            if num_keys != len(keys):
+                raise Exception("Some keys are missing after removing a partition.")
+            else:
+                print "OK, no keys were dropped after removing a partition."
+        except Exception as e:
+            print "Exception in test 8"
             print e
         stop_all_nodes(sudo)
