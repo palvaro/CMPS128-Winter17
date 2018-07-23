@@ -23,7 +23,7 @@ Distributed systems are notoriously difficult to program, and even harder to rea
 While distributed systems have been studied for some time, they have only recently become essentially ubiquitous:
 nearly all non-trivial systems are now physically distributed.  It is no longer possible to relegate responsibility for managing the complexity of distributed systems to a group of expert library or infrastructure writers: all programmers must now be distributed programmers. This is both a crisis and an opportunity.
 
-This course will cover both theoretical and practical aspects of distributed systems and distributed programming, diving the subject
+This course will cover both theoretical and practical aspects of distributed systems and distributed programming, dividing the subject
 matter into four core [Modules](modules.md):
 
  * Time and Asynchrony
@@ -52,7 +52,7 @@ but we expect you to come to the table with enough programming knowledge and exp
 
 
  
-# Assigments and Grading
+# Assignments and Grading
 
 ## Pop quizzes
 
@@ -60,13 +60,13 @@ To ensure that everyone keeps up with the reading and attends class, we will hol
 
 ## Final Project
 
-The final project will involve implementing and managing fault-tolerant distributed system.  This will be a substantial enginering effort, and we encourage you to work in teams of up to four people.
+The final project will involve implementing and managing a fault-tolerant distributed system.  This will be a substantial enginering effort, and we encourage you to work in teams of up to four people.
 
 The final project will be divided into four sub-projects, coming due roughly every two weeks.
 
-Project specifications will be posted on a separate page and announced on Piazza.  They will usually be posted before they are announced, but they are subject to change until announcement.  If we need to change an assigment after it was announced, we will email the class about the change.
+Project specifications will be posted on a separate page and announced on Piazza.  They will usually be posted before they are announced, but they are subject to change until announcement.  If we need to change an assignment after it was announced, we will email the class about the change.
 
-Assigments announcements will always include a due date.  
+Assignments' announcements will always include a due date.  
 
 <del>Late assignments are not accepted</del>.  Late assignments will forfeit 10% of the grade for every day late.  Students are granted *one grace day* that they may use for any assignment submission to avoid this penalty.
 
@@ -85,7 +85,7 @@ There will be two examinations: the midterm and the final.
 | Project | 40% |
 | Final   | 30%   | 
 
-Final projects are required to pass the course.  The fact that participation accounts for 5% of the grade (and pop quizzes for 10%) should give you an idea of the important of class attendance.  
+Final projects are required to pass the course.  The fact that participation accounts for 5% of the grade (and pop quizzes for 10%) should give you an idea of the importance of class attendance.  
 
 # Academic honesty
 
