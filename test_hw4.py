@@ -608,7 +608,7 @@ if __name__ == "__main__":
     if 8 in tests_to_run:
         try: # Test 8
             num_keys = 100
-            test_description = """ Test 7:
+            test_description = """ Test 8:
             A kvs consists of 2 partitions with 2 replicas each. 
             I add %s randomly generate keys to the kvs. I remove 1 partition (2 nodes) and 
             check whether any keys were dropped. (This test is different from other ones as they did not
